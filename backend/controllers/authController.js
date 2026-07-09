@@ -1,4 +1,5 @@
 import { User } from "../models/User.models.js";
+import generateToken from "../utlis/generateToken.js";
 
 export const signupUser= async (req,res)=> {
     try {
@@ -10,10 +11,12 @@ export const signupUser= async (req,res)=> {
         }
 
         const user =  await User.create({name,email,password})
+        const getToken = generateToken(user._id)
         return res.status(201).json({
             _id:user._id,
             name:user.name,
-            email:user.email
+            email:user.email,
+            token:getToken
         })
 
 
@@ -33,11 +36,12 @@ export const loginUser = async (req,res)=>{
         if(!isPasswordValid){
             return res.status(401).json({message:"Invalid credentials"})
         }
-        
+            const getToken2=generateToken(user._id)
             return res.status(200).json({
                 _id:user._id,
                 name:user.name,
-                email:user.email
+                email:user.email,
+                token:getToken2
             })
         
 
