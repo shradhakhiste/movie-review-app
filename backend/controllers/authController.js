@@ -50,3 +50,7 @@ export const loginUser = async (req,res)=>{
     }
 }
 
+export const getProfile = async (req,res)=>{
+    return res.status(200).json(req.user)
+}
+
