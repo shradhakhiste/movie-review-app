@@ -1,4 +1,5 @@
 
+
 import { Movie } from "../models/Movie.model.js";
 
 
@@ -29,6 +30,19 @@ export const getAllMovies = async (req,res)=>{
 
         const findMovies = await Movie.find();
         res.status(200).json(findMovies)
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
+
+export const getMovieById = async (req,res)=>{
+    try {
+        const movie=await Movie.findById(req.params.id)
+        if(!movie){
+            res.status(404).json({message:"Movie is not found"})
+        }else{
+            res.status(200).json(movie)
+        }
     } catch (error) {
         res.status(500).json({message:error.message})
     }
