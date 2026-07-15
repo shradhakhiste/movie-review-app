@@ -71,3 +71,24 @@ export const updateMovie = async (req,res)=>{
     
     }
 }
+
+export const deleteMovie = async (req, res) => {
+    try {
+        const movie = await Movie.findById(req.params.id);
+
+        if (!movie) {
+            return res.status(404).json({ message: "Movie not found" })
+        }
+
+        if (movie.addedBy.toString() !== req.user._id.toString()) {
+            return res.status(403).json({ message: "You are not authorized" })
+        }
+
+        await Movie.findByIdAndDelete(req.params.id)
+
+        res.status(200).json({ message: "Movie deleted successfully" })
+
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
