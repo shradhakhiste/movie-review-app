@@ -13,6 +13,7 @@ app.use(express.json())
 app.use('/api/auth',authRouter)
 app.use('/api/movies',movieRouter)
 app.use('/api/movies',reviewRouter)
+app.use('/api/reviews',reviewRouter)
 connectDB()
 
 app.get('/',(req,res)=>{
