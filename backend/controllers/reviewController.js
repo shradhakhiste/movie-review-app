@@ -33,3 +33,17 @@ export const reviewMovie = async (req,res)=>{
 
 }
 
+export const getMovieReview = async (req, res) => {
+  try {
+    const movieId = req.params.movieId;
+
+    const getAllReviews = await Review.find({ movie: movieId }).populate(
+      "user",
+      "name email",
+    );
+    res.status(200).json(getAllReviews);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
